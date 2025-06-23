@@ -95,7 +95,7 @@ def conditions_operated_plot(ofname, all_waves, bins, tp_mean, tp_std,
                 mask = np.isin(all_wave_dates, jb_times)
                 jb_hs.extend(all_waves['Hs'][mask])
                 jb_tp.extend(1 / all_waves['peakf'][mask])
-            ax2.scatter(jb_hs, jb_tp, marker='o', c='red', s=50, edgecolor='k', label='Jaiabot')
+            ax2.scatter(jb_hs, jb_tp, marker='o', c='red', s=50, edgecolor='k', label='JaiaBot')
 
         ax2.fill_between(bins, tp_mean + tp_std, tp_mean - tp_std, alpha=0.25, color='black', label='67%')
         ax2.fill_between(bins, tp_mean + 2 * tp_std, tp_mean - 2 * tp_std, alpha=0.25, color='black', label='95%')
