@@ -58,7 +58,7 @@ def conditions_operated_plot(ofname, all_waves, bins, tp_mean, tp_std,
     # Panel 1: Vertical lines for survey dates
     ax1 = plt.subplot2grid((3, 2), (0, 0), colspan=2)
     ax1.set_title('FRF - 17m Waverider Wave Height')
-    ax1.plot(all_waves['time'], all_waves['Hs'], label='Wave Height')
+    ax1.plot(all_waves['time'], all_waves['Hs'], label='Wave Height') #, color='#5A5A5A')
     ax1.set_ylabel('Wave Height [m]')
     ax1.set_xlabel('Date')
 
