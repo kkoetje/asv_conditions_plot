@@ -69,7 +69,7 @@ def conditions_operated_plot(ofname, all_waves, bins, tp_mean, tp_std,
 
     if jb_dates_list:
         for d in jb_dates_list:
-            ax1.axvline(dt.datetime.strptime(d, '%Y%m%d'), color='red', linestyle='--', linewidth=1, label='Jaiabot')
+            ax1.axvline(dt.datetime.strptime(d, '%Y%m%d'), color='red', linestyle='--', linewidth=1, label='JaiaBot')
 
         # Panel 2: Wave conditions during surveys
         ax2 = plt.subplot2grid((3, 2), (1, 0), colspan=2, rowspan=2)
