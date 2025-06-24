@@ -5,8 +5,8 @@ from matplotlib import pyplot as plt
 
 ############### USER INPUTS ###############
 
-ofname = 'all_yf_jb_wave_conditions.png'  # name of figure to be printed
-yf_date_file_name = 'all_yellowfin_dates.txt'  # Comment this line out if you don't want to include these dates
+ofname = 'all_jb_wave_conditions.png'  # name of figure to be printed
+#yf_date_file_name = 'all_yellowfin_dates.txt'  # Comment this line out if you don't want to include these dates
 jb_date_file_name = 'all_jaiabot_dates.txt'  # Comment this line out if you don't want to include these dates
 sampling_hours = 1  # number of hours for each survey, assuming start time below (one datapoint will be plotted for each hour)
 start_hour = 13  # assumed start hour in UTC (ie 1300 UTC)
@@ -71,40 +71,40 @@ def conditions_operated_plot(ofname, all_waves, bins, tp_mean, tp_std,
         for d in jb_dates_list:
             ax1.axvline(dt.datetime.strptime(d, '%Y%m%d'), color='red', linestyle='--', linewidth=1, label='JaiaBot')
 
-        # Panel 2: Wave conditions during surveys
-        ax2 = plt.subplot2grid((3, 2), (1, 0), colspan=2, rowspan=2)
-        ax2.set_title('Wave Conditions During Collections')
+    # Panel 2: Wave conditions during surveys
+    ax2 = plt.subplot2grid((3, 2), (1, 0), colspan=2, rowspan=2)
+    ax2.set_title('Wave Conditions During Collections')
 
-        if yf_dates_list:
-            yf_dates = [dt.datetime.strptime(date, '%Y%m%d') for date in yf_dates_list]
-            yf_hs, yf_tp = [], []
-            for d in yf_dates:
-                min_yf = d + dt.timedelta(hours=start_hour)
-                yf_times = [min_yf + dt.timedelta(hours=i) for i in range(sampling_hours)]
-                mask = np.isin(all_wave_dates, yf_times)
-                yf_hs.extend(all_waves['Hs'][mask])
-                yf_tp.extend(1 / all_waves['peakf'][mask])
-            ax2.scatter(yf_hs, yf_tp, marker='D', c='#FFDB58', s=50, edgecolor='k', label='Yellowfin')
+    if yf_dates_list:
+        yf_dates = [dt.datetime.strptime(date, '%Y%m%d') for date in yf_dates_list]
+        yf_hs, yf_tp = [], []
+        for d in yf_dates:
+            min_yf = d + dt.timedelta(hours=start_hour)
+            yf_times = [min_yf + dt.timedelta(hours=i) for i in range(sampling_hours)]
+            mask = np.isin(all_wave_dates, yf_times)
+            yf_hs.extend(all_waves['Hs'][mask])
+            yf_tp.extend(1 / all_waves['peakf'][mask])
+        ax2.scatter(yf_hs, yf_tp, marker='D', c='#FFDB58', s=50, edgecolor='k', label='Yellowfin')
 
-        if jb_dates_list:
-            jb_dates = [dt.datetime.strptime(date, '%Y%m%d') for date in jb_dates_list]
-            jb_hs, jb_tp = [], []
-            for d in jb_dates:
-                jb_min = d + dt.timedelta(hours=start_hour)
-                jb_times = [jb_min + dt.timedelta(hours=i) for i in range(sampling_hours)]
-                mask = np.isin(all_wave_dates, jb_times)
-                jb_hs.extend(all_waves['Hs'][mask])
-                jb_tp.extend(1 / all_waves['peakf'][mask])
-            ax2.scatter(jb_hs, jb_tp, marker='o', c='red', s=50, edgecolor='k', label='JaiaBot')
+    if jb_dates_list:
+        jb_dates = [dt.datetime.strptime(date, '%Y%m%d') for date in jb_dates_list]
+        jb_hs, jb_tp = [], []
+        for d in jb_dates:
+            jb_min = d + dt.timedelta(hours=start_hour)
+            jb_times = [jb_min + dt.timedelta(hours=i) for i in range(sampling_hours)]
+            mask = np.isin(all_wave_dates, jb_times)
+            jb_hs.extend(all_waves['Hs'][mask])
+            jb_tp.extend(1 / all_waves['peakf'][mask])
+        ax2.scatter(jb_hs, jb_tp, marker='o', c='red', s=50, edgecolor='k', label='JaiaBot')
 
-        ax2.fill_between(bins, tp_mean + tp_std, tp_mean - tp_std, alpha=0.25, color='black', label='67%')
-        ax2.fill_between(bins, tp_mean + 2 * tp_std, tp_mean - 2 * tp_std, alpha=0.25, color='black', label='95%')
-        ax2.set_xlabel('Wave Height [m]')
-        ax2.set_ylabel('Wave Period [s]')
-        ax2.set_xlim([0.25, 2])
-        ax2.legend(loc='upper right')
-        plt.tight_layout(rect=[0.02, 0.02, 0.99, 0.98])
-        plt.savefig(ofname)
+    ax2.fill_between(bins, tp_mean + tp_std, tp_mean - tp_std, alpha=0.25, color='black', label='67%')
+    ax2.fill_between(bins, tp_mean + 2 * tp_std, tp_mean - 2 * tp_std, alpha=0.25, color='black', label='95%')
+    ax2.set_xlabel('Wave Height [m]')
+    ax2.set_ylabel('Wave Period [s]')
+    ax2.set_xlim([0.25, 2])
+    ax2.legend(loc='upper right')
+    plt.tight_layout(rect=[0.02, 0.02, 0.99, 0.98])
+    plt.savefig(ofname)
 
 
 ###########################
